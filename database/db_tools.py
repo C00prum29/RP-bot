@@ -9,14 +9,14 @@ def stat_read(stat, character):
     connection.close()
     return stat
 
-def health_condition_read(character):
+def health_condition_read(character):    #доделать
     connection = db_connect('database/roleplay.db')
 
-    form = f'SELECT * FROM health WHERE character_id = "{character}";'
-    health = execute_read_query(connection, form)
+    health_form = f'SELECT * FROM health WHERE character_id = "{character}";'
+    health = execute_read_query(connection, health_form)[0]
 
     connection.close()
-    return "WIP"
+    return health
 
 def cause_damage(target, body_part, damage):
     connection = db_connect('database/roleplay.db')
@@ -37,9 +37,7 @@ def money_transaction(character, amount, target):
     target_wallet_form = f'SELECT wallet FROM characters WHERE id = "{character}";'
     character_wallet = execute_read_query(connection, character_wallet_form)[0][0] - amount
     target_wallet = execute_read_query(connection, target_wallet_form)[0][0] + amount
-    
-    
-    
+        
     character_transact_money_form = f'UPDATE characters SET wallet = {character_wallet} WHERE id = "{character}"'
     execute_query(connection,  character_transact_money_form)
     target_transact_money_form = f'UPDATE characters SET wallet = {target_wallet} WHERE id = "{target}"'
