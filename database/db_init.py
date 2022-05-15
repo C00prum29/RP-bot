@@ -1,10 +1,11 @@
-from db import db_connect, execute_query, execute_read_query
+from db import db_connect, execute_query
 
 create_characters_table = """
 CREATE TABLE IF NOT EXISTS characters (
   id TEXT NOT NULL, 
   user_id TEXT NOT NULL, 
-  level INTEGER NOT NULL
+  level INTEGER NOT NULL,
+  wallet INTEGER NOT NULL
 );
 """
 create_stats_table = """
@@ -44,14 +45,14 @@ CREATE TABLE IF NOT EXISTS augmentations (
 
 create_characters="""
 INSERT INTO
-  characters (user_id, id, level)
+  characters (user_id, id, level, wallet)
 VALUES
-    ('Бобр#0977','Маргарита', '1'),
-    ('Das kupfer#8909','Константин', '1'),
-    ('CyberFox2077#0039', 'Рейсу', '1'),
-    ('CyberFox2077#0039', 'Серафима', '1'),
-    ('CyberFox2077#0039', 'Кси', '1'),
-    ('CyberFox2077#0039', 'Ши', '1');
+    ('Бобр#0977','Маргарита', 1, 100),
+    ('Das kupfer#8909','Константин', 1, 100),
+    ('CyberFox2077#0039', 'Рейсу', 1, 100),
+    ('CyberFox2077#0039', 'Серафима', 1, 100),
+    ('CyberFox2077#0039', 'Кси', 1, 100),
+    ('CyberFox2077#0039', 'Ши', 1, 100);
 """
 
 create_stats="""
@@ -75,20 +76,6 @@ VALUES
     ('Маргарита','Нет', 'Нет', 'Нет', 'Нет', 'Нет', 'Нет'),
     ('Рейсу', 'Нет', 'Нет', 'Нет', 'Нет', 'Нет', 'Нет');
 """ 
-
-
-def cause_damage(target, body_part, damage):
-  part_select = f'SELECT {body_part} FROM health WHERE character_id = "{target}";'
-  health = execute_read_query(connection, part_select)[0][0] - damage
-  cause_damage = f"""
-UPDATE
-  health
-SET
-    {body_part} = {health}
-WHERE
-  character_id = {target}
-"""
-  execute_query(connection,  cause_damage) 
 
 
 connection = db_connect('database/roleplay.db')
