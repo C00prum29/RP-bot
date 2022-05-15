@@ -6,24 +6,24 @@ from database.db_tools import  stat_read, cause_damage, money_transaction    #С
 
 bot = commands.Bot(command_prefix=config['prefix'])
 
-@bot.command()
+@bot.command()    #сделать красивый вывод
 async def dice(ctx, stat='' ,character='' ,mod=0):
     await ctx.reply(random.randint(0,20) +  (stat_read(stat, character)-10)//2 + mod)
 
-@bot.command()
+@bot.command()    #доделывать много, тк надо вводить дб на оружее, так что да пока прост оне трогай
 async def atk(ctx, type='', character='', target=''):
     await ctx.reply('WIP')
 
-@bot.command()
+@bot.command() #сделать красивый вывод
 async def transfer(ctx, character='', amount=0, target=''):
     money_transaction(character, amount, target)
     await ctx.reply('Money transfered')
 
-@bot.command()
+@bot.command()   #Если удалишь - трахну <3
 async def pat(ctx):
     await ctx.reply('UwU')
 
-@bot.command()
+@bot.command()   #Тестовая функция для нанесения урона, потом удалю
 async def bite(ctx, character='', target='', part='body'):
     damage = random.randint(0,2) +   (stat_read('justice', character)-10)//2
     cause_damage(target, part, damage)
