@@ -33,3 +33,12 @@ def form_roll_result_emmed(dice_value):
     embed = discord.Embed(color = emmed_color, title = 'Бросок кубика:')
     embed.add_field(name= emmed_name, value=f'Ваш результат: {dice_value}')
     return embed
+
+
+'''
+Была идея функции, может ты что-то с ней сможешь сделать
+def form_money_transfer_emmed():
+    embed = discord.Embed(color = 0xFFFFFF, title = 'Перевод денег:')
+    embed.add_field(name = f'{characters[0]} перевела цели {characters[0]} {amount')
+    return embed
+'''

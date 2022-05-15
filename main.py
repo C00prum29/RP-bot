@@ -7,10 +7,9 @@ from tools.discord_tools import form_heath_condition_emmed, form_roll_result_emm
 
 bot = commands.Bot(command_prefix=config['prefix'])
 
-@bot.command()    #сделать красивый вывод
+@bot.command()    #сделать красивый вывод / готово?
 async def dice(ctx, stat='' ,character='' ,mod=0):
     dice_value = random.randint(0,20) +  (stat_read(stat, character)-10)//2 + mod
-
     embed = form_roll_result_emmed(dice_value)
     await ctx.reply(embed = embed)
 
@@ -20,8 +19,15 @@ async def atk(ctx, type='', character='', target=''):
 
 @bot.command() #сделать красивый вывод
 async def transfer(ctx, character='', amount=0, target=''):
-    money_transaction(character, amount, target)
-    await ctx.reply('Money transfered')
+    embed = discord.Embed(color = 0xFFFFFF, title = 'Перевод денег:')
+    embed.add_field(name = 'Подтверждено', value=f'{character} перевела цели {target} {amount} aхн')
+    await ctx.reply(embed = embed)
+
+'''
+Если сделаешь, то удаляй костыли и ставь это:
+    embed = form_money_transfer_emmed(result)
+    result = money_transaction(character, amount, target)
+'''
 
 @bot.command() #сделать красивый вывод
 async def health(ctx, character=''):
