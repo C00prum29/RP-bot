@@ -3,13 +3,16 @@ from discord.ext import commands
 import random
 from settings import config
 from tools.db_tools import  stat_read, cause_damage, money_transaction, health_condition_read   #Самописные функции для работы с бд
-from tools.discord_tools import form_heath_condition_emmed
+from tools.discord_tools import form_heath_condition_emmed, form_roll_result_emmed
 
 bot = commands.Bot(command_prefix=config['prefix'])
 
 @bot.command()    #сделать красивый вывод
 async def dice(ctx, stat='' ,character='' ,mod=0):
-    await ctx.reply(random.randint(0,20) +  (stat_read(stat, character)-10)//2 + mod)
+    dice_value = random.randint(0,20) +  (stat_read(stat, character)-10)//2 + mod
+
+    embed = form_roll_result_emmed(dice_value)
+    await ctx.reply(embed = embed)
 
 @bot.command()    #доделывать много, тк надо вводить дб на оружее, так что да пока прост оне трогай
 async def atk(ctx, type='', character='', target=''):
