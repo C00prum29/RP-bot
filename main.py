@@ -2,7 +2,8 @@ import discord
 from discord.ext import commands
 import random
 from settings import config
-from database.db_tools import  stat_read, cause_damage, money_transaction, health_condition_read   #Самописные функции для работы с бд
+from tools.db_tools import  stat_read, cause_damage, money_transaction, health_condition_read   #Самописные функции для работы с бд
+from tools.discord_tools import form_heath_condition_emmed
 
 bot = commands.Bot(command_prefix=config['prefix'])
 
@@ -20,12 +21,9 @@ async def transfer(ctx, character='', amount=0, target=''):
     await ctx.reply('Money transfered')
 
 @bot.command() #сделать красивый вывод
-async def health(ctx, character='', amount=0, target=''):
-    health = health_condition_read('Маргарита')
-
-    embed = discord.Embed(color = 0xFFFFFF, title = f'Анализ состояния {health[0]}')
-    embed.add_field(name="Name", value="you can make as much as fields you like to")
-
+async def health(ctx, character=''):
+    health = health_condition_read(character)
+    embed = form_heath_condition_emmed(health)
     await ctx.reply(embed = embed)
 
 @bot.command()   #Если удалишь - трахну <3
