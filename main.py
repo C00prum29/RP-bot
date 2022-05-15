@@ -21,7 +21,7 @@ async def atk(ctx, type='', character='', target=''):
 @bot.command() #сделать красивый вывод
 async def transfer(ctx, character='', amount=0, target=''):
     money_transaction(character, amount, target)
-    await ctx.reply('Money transfered')
+    await ctx.reply(target, 'получил_а', amount, 'ахн')
 
 @bot.command() #сделать красивый вывод
 async def health(ctx, character=''):
